@@ -1,57 +1,29 @@
 const std = @import("std");
-const build_capy = @import("capy");
 
-pub fn build(b: *std.Build) !void {
-    const target = b.standardTargetOptions(.{});
+pub fn build(b: *std.Build) void {
+    const target = b.host;
     const optimize = b.standardOptimizeOption(.{});
-
-    const capy_dep = b.dependency("capy", .{
-        .target = target,
-        .optimize = optimize,
-        .app_name = @as([]const u8, "neoMEG"),
-    });
-    const capy = capy_dep.module("capy");
 
     const exe = b.addExecutable(.{
         .name = "neomeg",
         .root_source_file = b.path("src/main.zig"),
         .target = target,
-        .optimize = optimize,
-    });
-    exe.root_module.addImport("capy", capy);
-    b.installArtifact(exe);
-
-    const serial = b.dependency("serial", .{
-        .target = target,
         .optimize = optimize
     });
-    exe.root_module.addImport("serial", serial.module("serial"));
 
-    const run_cmd = try build_capy.runStep(exe, .{ .args = b.args });
-    const run_step = b.step("run", "Run the app");
-    run_step.dependOn(run_cmd);
+    // const serial = b.dependency("serial", .{
+    //     .target = target,
+    //     .optimize = optimize
+    // });
+    // exe.root_module.addImport("serial", serial.module("serial"));
 
-    // Building for WebAssembly
-    @setEvalBranchQuota(5000);
-    const wasm = b.addExecutable(.{
-        .name = "neomeg",
-        .root_source_file = b.path("src/main.zig"),
-        .target = b.resolveTargetQuery(
-            comptime std.Target.Query.parse(.{ .arch_os_abi = "wasm32-wasi" }) catch unreachable,
-        ),
-        .optimize = optimize,
-    });
-    wasm.root_module.addImport("capy", capy);
-    const serve = try build_capy.runStep(wasm, .{});
-    const serve_step = b.step("serve", "Start a local web server to run this application");
-    serve_step.dependOn(serve);
+    exe.linkLibC();
+    exe.linkSystemLibrary2("gtk4", .{ .use_pkg_config = .force });
 
-    const exe_tests = b.addTest(.{
-        .root_source_file = b.path("src/main.zig"),
-        .target = target,
-        .optimize = optimize,
-    });
+    b.installArtifact(exe);
 
-    const test_step = b.step("test", "Run unit tests");
-    test_step.dependOn(&exe_tests.step);
+    const run_exe = b.addRunArtifact(exe);
+
+    const run_step = b.step("run", "Run the application");
+    run_step.dependOn(&run_exe.step);
 }

@@ -27,10 +27,6 @@
             .url = "git+https://github.com/ZigEmbeddedGroup/serial#ba021c92d48eed1410722f34aad3802dab94da5a",
             .hash = "1220e71baf33dd3eb1f6f8080cd7425de694b87abca42ab4c891979518da37abc0ab",
         },
-        .capy = .{
-            .url = "git+https://github.com/capy-ui/capy#6118c0490cfdd17dc1972ea3507505ffc8d31a59",
-            .hash = "122082ff9145ea0bed6358236202c8b36bf6b0cafca7e6751f37f0a841d1515582d4",
-        },
     },
     .paths = .{
         "build.zig",

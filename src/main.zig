@@ -1,5 +1,5 @@
 const std = @import("std");
-const zig_serial = @import("serial");
+const zig_serial = @import("./communication/serial.zig");
 
 const application = @import("./gui/application.zig");
 const command = @import("./command/command.zig");
@@ -7,12 +7,13 @@ const channel = @import("./oscilloscope/channel.zig");
 const waveform = @import("./oscilloscope/waveform.zig");
 
 pub fn main() !void {
-    var serial = try std.fs.cwd().openFile("\\\\.\\COM2", .{ .mode = .read_write });
+    var serial = try std.fs.cwd().openFile("\\\\.\\COM1", .{ .mode = .read_write });
     var gpa = std.heap.GeneralPurposeAllocator(. {}){};
     const alloc = gpa.allocator();
-    // defer serial.close();
+    defer serial.close();
 
-    try application.Application.init();
+    _ = application.Application.main();
+    std.debug.print("aaaaaaaaaaa", .{});
 
     try zig_serial.configureSerialPort(serial, zig_serial.SerialConfig {
         .baud_rate = 115200,
@@ -74,7 +75,6 @@ pub fn main() !void {
 
     _ = try command.sendCommand(alloc, serial, command.Command.REMOTE_EXIT, "");
     alloc.free(result);
-    serial.close();
 }
 
 test "simple test" {
