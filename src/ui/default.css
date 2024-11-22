@@ -1,0 +1,64 @@
+@define-color text-main #020617;
+@define-color success #16a34a; /* green-600 */
+@define-color failure #dc2626; /* red-600 */
+@define-color info #0284c7;
+@define-color warn #f59e0b;
+
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+}
+
+button {
+  background-image: none;
+  box-shadow: none;
+}
+
+headerbar, windowhandle {
+  background-color: #d1d5db;
+  background-image: none;
+}
+
+.device-list * {
+  border-radius: 0;
+  border-color: transparent;
+}
+
+list row:first-child {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.device-list row {
+  padding: 0;
+}
+
+.device-button {
+  background-color: transparent;
+  box-shadow: none;
+  background-image: none;
+}
+
+.device-button:hover, list row:first-child:hover {
+  background-color: #f3f4f6;
+}
+
+.device-button:active, list row:first-child:active {
+  background-color: #e5e7eb;
+}
+
+.device-button image {
+  margin: 0;
+  padding: 5px;
+}
+
+.device-button.connected image {
+  color: @success;
+}
+
+.device-button.disconnected image {
+  color: @text-main;
+}
+
+.device-button.failedconnect image {
+  color: @failure;
+}

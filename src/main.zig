@@ -7,8 +7,8 @@ const channel = @import("./oscilloscope/channel.zig");
 const waveform = @import("./oscilloscope/waveform.zig");
 
 pub fn main() !void {
-    var serial = try std.fs.cwd().openFile("\\\\.\\COM1", .{ .mode = .read_write });
-    defer serial.close();
+    // var serial = try std.fs.cwd().openFile("\\\\.\\COM1", .{ .mode = .read_write });
+    // defer serial.close();
 
     _ = application.Application.main();
 }

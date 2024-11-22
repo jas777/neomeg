@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkApplicationWindow" id="window">
+    <property name="title">neoMEG</property>
+    <property name="default-height">600</property>
+    <property name="default-width">800</property>
+    <property name="titlebar">
+      <object class="GtkHeaderBar">
+        <child type="start">
+          <object class="GtkMenuButton">
+            <property name="label" translatable="true">File</property>
+            <property name="menu-model">open_menu</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkMenuButton">
+            <property name="icon-name">open-menu-symbolic</property>
+            <property name="tooltip-text" translatable="true">Main Menu</property>
+            <property name="primary">true</property>
+            <property name="menu-model">window_menu</property>
+          </object>
+        </child>
+      </object>
+    </property>
+    <child>
+      <object class="GtkGrid" id="container">
+        <property name="orientation">0</property>
+        <child>
+          <object class="GtkBox" id="sidebar">
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
+            <style>
+              <class name="sidebar"/>
+            </style>
+            <layout>
+              <property name="column">0</property>
+            </layout>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="vexpand">true</property>
+                <property name="hexpand">true</property>
+                <child>
+                  <object class="GtkListBox" id="device-list">
+                    <property name="hexpand">true</property>
+                    <property name="vexpand">true</property>
+                    <property name="show-separators">false</property>
+                    <style>
+                      <class name="device-list"/>
+                    </style>
+                    <child>
+                      <object class="GtkButton">
+                        <style>
+                          <class name="device-button"/>
+                        </style>
+                        <property name="hexpand">true</property>
+                        <!-- signal name="clicked" handler="on_new_device_clicked"/> -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="spacing">10</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon-name">list-add</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label">New device...</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <style>
+                          <class name="device-button"/>
+                          <class name="failedconnect"/>
+                        </style>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="spacing">10</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon-name">network-wired</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label">HM 1507</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="content">
+            <property name="hexpand">true</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="column-span">5</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <menu id="window_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="true">Keyboard Shortcuts</attribute>
+        <attribute name="action">app.shortcuts</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="true">About App</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="open_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="true">Item 1</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="true">Item 2</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="true">Item 3</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>
