@@ -19,6 +19,7 @@ pub fn build(b: *std.Build) void {
 
     exe.linkLibC();
     exe.linkSystemLibrary2("gtk4", .{ .use_pkg_config = .force });
+    exe.linkSystemLibrary2("libadwaita-1", .{ .use_pkg_config = .force });
 
     b.installArtifact(exe);
 

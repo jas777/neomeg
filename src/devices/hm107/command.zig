@@ -34,7 +34,7 @@ fn expectedBytes(command: Command) u16 {
         .AUTOSET => 3,
         .WAVEFORM_PREAMBLE => 17,
         .CH1_READ => 5,
-        .CH2_READ => 1
+        .CH2_READ => 5
     };
 }
 

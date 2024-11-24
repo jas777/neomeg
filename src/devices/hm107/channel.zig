@@ -7,7 +7,7 @@ pub fn create_channel(id: u2, config: u8) Channel {
     return Channel{ .id = id, .gnd = (config >> 7 & 1) != 0, .ac = (config >> 6 & 1) != 0, .inv = (config >> 5 & 1) != 0, .on = (config >> 4 & 1) != 0, .div = @truncate(config), .div_mapped = map_volts_per_div(@truncate(config)) };
 }
 
-fn map_volts_per_div(config_value: u4) f32 {
+pub fn map_volts_per_div(config_value: u4) f32 {
     return switch (config_value) {
         0 => 0.001,
         1 => 0.002,

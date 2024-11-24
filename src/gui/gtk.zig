@@ -2,6 +2,10 @@ pub usingnamespace @cImport({
     @cInclude("gtk/gtk.h");
 });
 
+pub const adw = @cImport({
+    @cInclude("adwaita.h");
+});
+
 const c = @cImport({
     @cInclude("gtk/gtk.h");
 });
