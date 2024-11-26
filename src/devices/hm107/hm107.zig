@@ -13,7 +13,8 @@ fn intToString(int: f32, buf: []u8) ![]const u8 {
 
 pub const Hm107Device = struct {
     alloc: std.mem.Allocator,
-    id: u8,
+    id: []const u8 = "4141214",
+    firmware: []const u8 = "",
     name: []const u8 = "HM 107 Series Device",
     connection: std.fs.File,
     
@@ -48,16 +49,35 @@ pub const Hm107Device = struct {
         result = try command.sendCommand(alloc, connection, command.Command.WAVEFORM_PREAMBLE, "");
         const waveform_preamble = waveform.create_waveform_preamble(result[7..17]);
         
-        _ = try command.sendCommand(alloc, connection, command.Command.REMOTE_EXIT, "");
+        var model_split = std.mem.splitAny(u8, try command.sendCommand(alloc, connection, command.Command.ID, ""), " ");
+        var model = model_split.next().?;
 
-        return Hm107Device {
-            .id = 1,
+        var fw = try command.sendCommand(alloc, connection, command.Command.VERS, "");
+
+        for (1..fw.len) |i| {
+            if (fw[fw.len - i] != 32) break;
+            if (fw[fw.len - i] == 32) fw[fw.len - i] = undefined;
+        }
+
+        const device =  Hm107Device {
+            .id = try alloc.dupeZ(u8, model[3..]),
+            .firmware = try alloc.dupeZ(u8, fw[5..]),
             .alloc = alloc,
             .connection = connection,
             .ch1 = ch1,
             .ch2 = ch2,
             .waveform_preamble = waveform_preamble
         };
+
+        _ = try command.sendCommand(alloc, connection, command.Command.REMOTE_EXIT, "");
+        return device;
+    }
+
+    pub fn addZ(comptime length: usize, value: [length]u8) [length:0]u8 {
+        var terminated_value: [length:0]u8 = undefined;
+        terminated_value[length] = 0;
+        @memcpy(&terminated_value, &value);
+        return terminated_value;
     }
 
     pub fn set_page(port_name: []const u8, navigation: [*c]gtk.GtkWidget) !void {
@@ -74,6 +94,12 @@ pub const Hm107Device = struct {
 
         const page: *gtk.adw.AdwNavigationPage = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "view"));
         gtk.adw.adw_navigation_split_view_set_content(@ptrCast(navigation), @ptrCast(page));
+
+        const model_entry: *gtk.GtkEntry = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "model"));
+        gtk.gtk_entry_set_placeholder_text(@ptrCast(model_entry), @ptrCast(device.id));
+
+        const firmware_entry: *gtk.GtkEntry = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "firmware"));
+        gtk.gtk_entry_set_placeholder_text(@ptrCast(firmware_entry), @ptrCast(device.firmware));
 
         const ch1_volts: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_volts_div"));
         gtk.gtk_drop_down_set_selected(@ptrCast(ch1_volts), device.ch1.div);

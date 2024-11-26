@@ -19,11 +19,92 @@
                 </style>
                 <property name="hexpand">true</property>
                 <property name="xalign">0</property>
-                <property name="label">Channels</property>
+                <property name="label">Oscilloscope information</property>
               </object>
             </child>
             <layout>
               <property name="row">0</property>
+              <property name="column">0</property>
+              <property name="column-span">6</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkGrid">
+            <style>
+              <class name="section"/>
+            </style>
+            <child>
+              <object class="GtkBox">
+                <style>
+                  <class name="linked"/>
+                </style>
+                <child>
+                  <object class="GtkLabel">
+                    <style>
+                      <class name="group-label"/>
+                    </style>
+                    <property name="xalign">0</property>
+                    <property name="label">Model &amp; Firmware version</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="row">0</property>
+                  <property name="column">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <style>
+                  <class name="linked"/>
+                </style>
+                <child>
+                  <object class="GtkEntry" id="model">
+                    <style>
+                      <class name="linked"/>
+                    </style>
+                    <property name="placeholder-text">HAMEG 107 Series</property>
+                    <property name="editable">false</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="firmware">
+                    <style>
+                      <class name="linked"/>
+                    </style>
+                    <property name="placeholder-text">FCX.XX DGX.XX</property>
+                    <property name="editable">false</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="row">1</property>
+                  <property name="column">0</property>
+                </layout>
+              </object>
+            </child>
+            <layout>
+              <property name="row">1</property>
+              <property name="column">0</property>
+              <property name="column-span">3</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <child>
+              <object class="GtkLabel">
+                <style>
+                  <class name="section-label"/>
+                </style>
+                <property name="hexpand">true</property>
+                <property name="xalign">0</property>
+                <property name="label">Channels</property>
+              </object>
+            </child>
+            <layout>
+              <property name="row">2</property>
+              <property name="column">0</property>
               <property name="column-span">6</property>
             </layout>
           </object>
@@ -42,7 +123,7 @@
                   </object>
                 </child>
                 <layout>
-                  <property name="row">0</property>
+                  <property name="row">2</property>
                   <property name="column">0</property>
                 </layout>
               </object>
@@ -63,33 +144,33 @@
                     <property name="model">
                       <object class="GtkStringList">
                         <items>
-                          <item translatable="no">1m</item>
-                          <item translatable="no">2m</item>
-                          <item translatable="no">5m</item>
-                          <item translatable="no">10m</item>
-                          <item translatable="no">20m</item>
-                          <item translatable="no">50m</item>
-                          <item translatable="no">100m</item>
-                          <item translatable="no">200m</item>
-                          <item translatable="no">500m</item>
-                          <item translatable="no">1</item>
-                          <item translatable="no">2</item>
-                          <item translatable="no">5</item>
-                          <item translatable="no">10</item>
-                          <item translatable="no">20</item>
+                          <item>1m</item>
+                          <item>2m</item>
+                          <item>5m</item>
+                          <item>10m</item>
+                          <item>20m</item>
+                          <item>50m</item>
+                          <item>100m</item>
+                          <item>200m</item>
+                          <item>500m</item>
+                          <item>1</item>
+                          <item>2</item>
+                          <item>5</item>
+                          <item>10</item>
+                          <item>20</item>
                         </items>
                       </object>
                     </property>
                   </object>
                 </child>
                 <layout>
-                  <property name="row">1</property>
+                  <property name="row">3</property>
                   <property name="column">0</property>
                 </layout>
               </object>
             </child>
             <layout>
-              <property name="row">1</property>
+              <property name="row">3</property>
               <property name="column">0</property>
               <property name="column-span">3</property>
             </layout>
@@ -97,6 +178,9 @@
         </child>
         <child>
           <object class="GtkGrid">
+            <style>
+              <class name="section"/>
+            </style>
             <child>
               <object class="GtkBox">
                 <child>
@@ -109,7 +193,7 @@
                   </object>
                 </child>
                 <layout>
-                  <property name="row">0</property>
+                  <property name="row">2</property>
                   <property name="column">0</property>
                 </layout>
               </object>
@@ -130,33 +214,33 @@
                     <property name="model">
                       <object class="GtkStringList">
                         <items>
-                          <item translatable="no">1m</item>
-                          <item translatable="no">2m</item>
-                          <item translatable="no">5m</item>
-                          <item translatable="no">10m</item>
-                          <item translatable="no">20m</item>
-                          <item translatable="no">50m</item>
-                          <item translatable="no">100m</item>
-                          <item translatable="no">200m</item>
-                          <item translatable="no">500m</item>
-                          <item translatable="no">1</item>
-                          <item translatable="no">2</item>
-                          <item translatable="no">5</item>
-                          <item translatable="no">10</item>
-                          <item translatable="no">20</item>
+                          <item>1m</item>
+                          <item>2m</item>
+                          <item>5m</item>
+                          <item>10m</item>
+                          <item>20m</item>
+                          <item>50m</item>
+                          <item>100m</item>
+                          <item>200m</item>
+                          <item>500m</item>
+                          <item>1</item>
+                          <item>2</item>
+                          <item>5</item>
+                          <item>10</item>
+                          <item>20</item>
                         </items>
                       </object>
                     </property>
                   </object>
                 </child>
                 <layout>
-                  <property name="row">1</property>
+                  <property name="row">3</property>
                   <property name="column">0</property>
                 </layout>
               </object>
             </child>
             <layout>
-              <property name="row">1</property>
+              <property name="row">3</property>
               <property name="column">3</property>
               <property name="column-span">3</property>
             </layout>
