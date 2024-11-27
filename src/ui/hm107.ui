@@ -194,7 +194,7 @@
                 <property name="margin-start">25</property>
                 <child>
                   <object class="GtkLabel">
-                    <property name="label">VAR</property>
+                    <property name="label">Var.</property>
                     <property name="margin-end">10</property>
                   </object>
                 </child>
@@ -287,7 +287,7 @@
                 <property name="margin-start">25</property>
                 <child>
                   <object class="GtkLabel">
-                    <property name="label">VAR</property>
+                    <property name="label">Var.</property>
                     <property name="margin-end">10</property>
                   </object>
                 </child>

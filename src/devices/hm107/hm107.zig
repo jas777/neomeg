@@ -96,7 +96,13 @@ pub const Hm107Device = struct {
 
         const ch1_var: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_var"));
         var buf: [8]u8 = undefined;
-        _ = try std.fmt.bufPrintZ(&buf, "{d:.3}", .{ channel.var_to_factor(device.ch1.ch_var) });
+        const ch1_factor: f16 = channel.var_to_factor(device.ch1.ch_var);
+
+        if (ch1_factor != 1.0) {
+            gtk.gtk_widget_add_css_class(@ptrCast(@alignCast(ch1_var)), "warning");
+        }
+
+        _ = try std.fmt.bufPrintZ(&buf, "{d:.3}", .{ ch1_factor });
         gtk.gtk_editable_set_text(@ptrCast(ch1_var), @ptrCast(&buf));
 
         const ch2_volts: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_volts_div"));
@@ -104,7 +110,13 @@ pub const Hm107Device = struct {
 
         const ch2_var: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_var"));
         buf = undefined;
-        _ = try std.fmt.bufPrintZ(&buf, "{d:.3}", .{ channel.var_to_factor(device.ch2.ch_var) });
+        const ch2_factor: f16 = channel.var_to_factor(device.ch2.ch_var);
+
+        if (ch2_factor != 1.0) {
+            gtk.gtk_widget_add_css_class(@ptrCast(@alignCast(ch2_var)), "warning");
+        }
+
+        _ = try std.fmt.bufPrintZ(&buf, "{d:.3}", .{ ch2_factor });
         gtk.gtk_editable_set_text(@ptrCast(ch2_var), @ptrCast(&buf));
     }
 };
