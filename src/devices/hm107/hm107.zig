@@ -41,10 +41,12 @@ pub const Hm107Device = struct {
         _ = try command.sendCommand(alloc, connection, command.Command.INIT, "");
 
         var result = try command.sendCommand(alloc, connection, command.Command.CH1_READ, "");
-        const ch1 = channel.create_channel(1, result[4]);
+        const ch1_var: u8 = (try command.sendCommand(alloc, connection, command.Command.VAR1_READ, ""))[7];
+        const ch1 = channel.create_channel(1, result[4], ch1_var);
 
         result = try command.sendCommand(alloc, connection, command.Command.CH2_READ, "");
-        const ch2 = channel.create_channel(2, result[4]);
+        const ch2_var: u8 = (try command.sendCommand(alloc, connection, command.Command.VAR2_READ, ""))[7];
+        const ch2 = channel.create_channel(2, result[4], ch2_var);
 
         result = try command.sendCommand(alloc, connection, command.Command.WAVEFORM_PREAMBLE, "");
         const waveform_preamble = waveform.create_waveform_preamble(result[7..17]);
@@ -54,14 +56,9 @@ pub const Hm107Device = struct {
 
         var fw = try command.sendCommand(alloc, connection, command.Command.VERS, "");
 
-        for (1..fw.len) |i| {
-            if (fw[fw.len - i] != 32) break;
-            if (fw[fw.len - i] == 32) fw[fw.len - i] = undefined;
-        }
-
         const device =  Hm107Device {
             .id = try alloc.dupeZ(u8, model[3..]),
-            .firmware = try alloc.dupeZ(u8, fw[5..]),
+            .firmware = try alloc.dupeZ(u8, fw[5..fw.len-2]),
             .alloc = alloc,
             .connection = connection,
             .ch1 = ch1,
@@ -71,13 +68,6 @@ pub const Hm107Device = struct {
 
         _ = try command.sendCommand(alloc, connection, command.Command.REMOTE_EXIT, "");
         return device;
-    }
-
-    pub fn addZ(comptime length: usize, value: [length]u8) [length:0]u8 {
-        var terminated_value: [length:0]u8 = undefined;
-        terminated_value[length] = 0;
-        @memcpy(&terminated_value, &value);
-        return terminated_value;
     }
 
     pub fn set_page(port_name: []const u8, navigation: [*c]gtk.GtkWidget) !void {
@@ -96,15 +86,25 @@ pub const Hm107Device = struct {
         gtk.adw.adw_navigation_split_view_set_content(@ptrCast(navigation), @ptrCast(page));
 
         const model_entry: *gtk.GtkEntry = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "model"));
-        gtk.gtk_entry_set_placeholder_text(@ptrCast(model_entry), @ptrCast(device.id));
+        gtk.gtk_editable_set_text(@ptrCast(model_entry), @ptrCast(device.id));
 
         const firmware_entry: *gtk.GtkEntry = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "firmware"));
-        gtk.gtk_entry_set_placeholder_text(@ptrCast(firmware_entry), @ptrCast(device.firmware));
+        gtk.gtk_editable_set_text(@ptrCast(firmware_entry), @ptrCast(device.firmware));
 
         const ch1_volts: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_volts_div"));
         gtk.gtk_drop_down_set_selected(@ptrCast(ch1_volts), device.ch1.div);
 
+        const ch1_var: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_var"));
+        var buf: [8]u8 = undefined;
+        _ = try std.fmt.bufPrintZ(&buf, "{d:.3}", .{ channel.var_to_factor(device.ch1.ch_var) });
+        gtk.gtk_editable_set_text(@ptrCast(ch1_var), @ptrCast(&buf));
+
         const ch2_volts: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_volts_div"));
         gtk.gtk_drop_down_set_selected(@ptrCast(ch2_volts), device.ch2.div);
+
+        const ch2_var: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_var"));
+        buf = undefined;
+        _ = try std.fmt.bufPrintZ(&buf, "{d:.3}", .{ channel.var_to_factor(device.ch2.ch_var) });
+        gtk.gtk_editable_set_text(@ptrCast(ch2_var), @ptrCast(&buf));
     }
 };

@@ -10,6 +10,8 @@ pub const Command = enum {
     WAVEFORM_PREAMBLE,
     CH1_READ,
     CH2_READ,
+    VAR1_READ,
+    VAR2_READ,
     VERS,
     ID,
 };
@@ -24,6 +26,8 @@ fn mapCommandToString(command: Command) ![]const u8 {
         .WAVEFORM_PREAMBLE => "WFMPRE?\r\n",
         .CH1_READ => "CH1?\r\n",
         .CH2_READ => "CH2?\r\n",
+        .VAR1_READ => "CH1VAR?\r\n",
+        .VAR2_READ => "CH2VAR?\r\n",
         .VERS => "VERS?\r\n",
         .ID => "ID?\r\n",
     };
@@ -39,6 +43,8 @@ fn expectedBytes(command: Command) u16 {
         .WAVEFORM_PREAMBLE => 17,
         .CH1_READ => 5,
         .CH2_READ => 5,
+        .VAR1_READ => 8,
+        .VAR2_READ => 8,
         .VERS => 20,
         .ID => 30
     };

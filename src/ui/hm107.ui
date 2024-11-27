@@ -10,6 +10,7 @@
         <property name="margin-start">30</property>
         <property name="margin-bottom">10</property>
         <property name="margin-end">30</property>
+        <property name="column-spacing">50</property>
         <child>
           <object class="GtkBox">
             <child>
@@ -83,6 +84,22 @@
                 </layout>
               </object>
             </child>
+            <child>
+              <object class="GtkBox">
+                <style>
+                  <class name="linked"/>
+                </style>
+                <child>
+                  <object class="GtkCheckButton" id="rm">
+                    <property name="label">Remote lock</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="row">1</property>
+                  <property name="column">1</property>
+                </layout>
+              </object>
+            </child>
             <layout>
               <property name="row">1</property>
               <property name="column">0</property>
@@ -111,6 +128,9 @@
         </child>
         <child>
           <object class="GtkGrid">
+            <style>
+              <class name="hm107--section"/>
+            </style>
             <child>
               <object class="GtkBox">
                 <child>
@@ -169,6 +189,28 @@
                 </layout>
               </object>
             </child>
+            <child>
+              <object class="GtkBox">
+                <property name="margin-start">25</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">VAR</property>
+                    <property name="margin-end">10</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="ch1_var">
+                    <style>
+                      <class name="hm107--div-dropdown"/>
+                    </style>
+                  </object>
+                </child>
+                <layout>
+                  <property name="row">3</property>
+                  <property name="column">1</property>
+                </layout>
+              </object>
+            </child>
             <layout>
               <property name="row">3</property>
               <property name="column">0</property>
@@ -180,6 +222,7 @@
           <object class="GtkGrid">
             <style>
               <class name="section"/>
+              <class name="hm107--section"/>
             </style>
             <child>
               <object class="GtkBox">
@@ -236,6 +279,28 @@
                 <layout>
                   <property name="row">3</property>
                   <property name="column">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="margin-start">25</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">VAR</property>
+                    <property name="margin-end">10</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="ch2_var">
+                    <style>
+                      <class name="hm107--div-dropdown"/>
+                    </style>
+                  </object>
+                </child>
+                <layout>
+                  <property name="row">3</property>
+                  <property name="column">1</property>
                 </layout>
               </object>
             </child>
