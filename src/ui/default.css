@@ -1,13 +1,14 @@
-@define-color text-main #020617;
+@define-color text-main #030712; /* gray-400 */
+@define-color text-secondary #9ca3af;
 @define-color success #16a34a; /* green-600 */
 @define-color failure #dc2626; /* red-600 */
 @define-color info #0284c7;
 @define-color warn #f59e0b;
 
 * {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
+  font-family: 'Segoe UI';
+  font-size: 16px;
+  font-weight: 400;
 }
 
 button {
@@ -60,19 +61,35 @@ button {
 }
 
 .section-label {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
   margin-bottom: 15px;
 }
 
 .group-label {
-  font-size: 16px;
-  font-weight: 550;
+  font-size: 18px;
+  font-weight: 600;
   margin-bottom: 5px;
+  color: @text-secondary;
 }
 
 .hm107--div-dropdown {
-  min-width: 100px;
+  min-width: 70px;
+}
+
+.hm107--block-section {
+  border: 3px @unfocused_borders solid;
+  border-radius: 7px;
+}
+
+.hm107--block-section > label {
+  margin: 0;
+  background-color: @unfocused_borders;
+  padding: 5px 15px;
+}
+
+.hm107--block-section > box {
+  padding: 3px 5px;
 }
 
 grid.section {

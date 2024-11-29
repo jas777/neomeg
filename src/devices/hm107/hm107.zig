@@ -91,8 +91,7 @@ pub const Hm107Device = struct {
         const firmware_entry: *gtk.GtkEntry = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "firmware"));
         gtk.gtk_editable_set_text(@ptrCast(firmware_entry), @ptrCast(device.firmware));
 
-        const ch1_volts: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_volts_div"));
-        gtk.gtk_drop_down_set_selected(@ptrCast(ch1_volts), device.ch1.div);
+        // Channel 1
 
         const ch1_var: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_var"));
         var buf: [8]u8 = undefined;
@@ -105,12 +104,41 @@ pub const Hm107Device = struct {
         _ = try std.fmt.bufPrintZ(&buf, "{d:.3}", .{ ch1_factor });
         gtk.gtk_editable_set_text(@ptrCast(ch1_var), @ptrCast(&buf));
 
-        const ch2_volts: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_volts_div"));
-        gtk.gtk_drop_down_set_selected(@ptrCast(ch2_volts), device.ch2.div);
-
         const ch2_var: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_var"));
         buf = undefined;
         const ch2_factor: f16 = channel.var_to_factor(device.ch2.ch_var);
+
+        const ch1_volts: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_volts_div"));
+        const ch1_volts_values: *gtk.GtkStringList = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_volts_div_values"));
+
+        for (0..14) |i| {
+            const adjusted_div: f16 = @floatCast(channel.map_volts_per_div(@intCast(i)) * ch1_factor);
+            var adjusted_div_slice: [8]u8 = undefined;
+            _ = try std.fmt.bufPrintZ(&adjusted_div_slice, "{d:.3}", .{ adjusted_div });
+            gtk.gtk_string_list_append(@ptrCast(ch1_volts_values), @ptrCast(&adjusted_div_slice));
+        }
+        gtk.gtk_drop_down_set_selected(@ptrCast(ch1_volts), device.ch1.div);
+
+        const ch1_ac: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_input"));
+        const ch1_dc: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_dc"));
+        const ch1_gnd: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch1_gnd"));
+
+        if (device.ch1.ac and !device.ch2.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch1_ac), 1)
+        else if (!device.ch1.ac and !device.ch1.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch1_dc), 1)
+        else if (device.ch1.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch1_gnd), 1);
+
+        // Channel 2
+
+        const ch2_volts: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_volts_div"));
+        const ch2_volts_values: *gtk.GtkStringList = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_volts_div_values"));
+
+        for (0..14) |i| {
+            const adjusted_div: f16 = @floatCast(channel.map_volts_per_div(@intCast(i)) * ch2_factor);
+            var adjusted_div_slice: [8]u8 = undefined;
+            _ = try std.fmt.bufPrintZ(&adjusted_div_slice, "{d:.3}", .{ adjusted_div });
+            gtk.gtk_string_list_append(@ptrCast(ch2_volts_values), @ptrCast(&adjusted_div_slice));
+        }
+        gtk.gtk_drop_down_set_selected(@ptrCast(ch2_volts), device.ch2.div);
 
         if (ch2_factor != 1.0) {
             gtk.gtk_widget_add_css_class(@ptrCast(@alignCast(ch2_var)), "warning");
@@ -118,5 +146,13 @@ pub const Hm107Device = struct {
 
         _ = try std.fmt.bufPrintZ(&buf, "{d:.3}", .{ ch2_factor });
         gtk.gtk_editable_set_text(@ptrCast(ch2_var), @ptrCast(&buf));
+
+        const ch2_ac: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_input"));
+        const ch2_dc: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_dc"));
+        const ch2_gnd: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_gnd"));
+
+        if (device.ch2.ac and !device.ch2.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch2_ac), 1)
+        else if (!device.ch2.ac and !device.ch2.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch2_dc), 1)
+        else if (device.ch2.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch2_gnd), 1);
     }
 };
