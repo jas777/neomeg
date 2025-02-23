@@ -12,8 +12,13 @@ pub const Command = enum {
     CH2_READ,
     VAR1_READ,
     VAR2_READ,
+    TBA_READ,
+    TBB_READ,
+    TRIG_READ,
+    VERMODE_READ,
     VERS,
     ID,
+    
 };
 
 fn mapCommandToString(command: Command) ![]const u8 {
@@ -28,6 +33,10 @@ fn mapCommandToString(command: Command) ![]const u8 {
         .CH2_READ => "CH2?\r\n",
         .VAR1_READ => "CH1VAR?\r\n",
         .VAR2_READ => "CH2VAR?\r\n",
+        .TBA_READ => "TBA?\r\n",
+        .TBB_READ => "TBB?\r\n",
+        .TRIG_READ => "TRIG?\r\n",
+        .VERMODE_READ => "VERMODE?\r\n",
         .VERS => "VERS?\r\n",
         .ID => "ID?\r\n",
     };
@@ -45,6 +54,10 @@ fn expectedBytes(command: Command) u16 {
         .CH2_READ => 5,
         .VAR1_READ => 8,
         .VAR2_READ => 8,
+        .TBA_READ => 5,
+        .TBB_READ => 5,
+        .TRIG_READ => 6,
+        .VERMODE_READ => 9,
         .VERS => 20,
         .ID => 30
     };
@@ -55,15 +68,15 @@ pub fn sendCommand(alloc: std.mem.Allocator, connection: std.fs.File, command: C
     const bytes = expectedBytes(command);
     try connection.writer().writeAll(name);
     try connection.writer().writeAll(args);
-    std.debug.print("Sending command {s}\n", .{ @tagName(command) });
+    std.debug.print("Sending command {s} -> ", .{ @tagName(command) });
 
     var result = try alloc.alloc(u8, bytes);
 
     for (0..bytes) |i| {
         result[i] = try connection.reader().readByte();
-        // std.debug.print("Reading byte for {X}", .{ result[i] });
     }
     if (command == Command.AUTOSET) std.time.sleep(1000000000);
+    std.debug.print("{s}", .{ result });
     return result;
 }
 

@@ -5,441 +5,755 @@
     <property name="title">Test</property>
     <property name="tag">Test</property>
     <property name="child">
-      <object class="GtkGrid">
-        <property name="margin-top">10</property>
-        <property name="margin-start">30</property>
-        <property name="margin-bottom">10</property>
-        <property name="margin-end">30</property>
-        <property name="column-spacing">50</property>
-        <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkLabel">
-                <style>
-                  <class name="section-label"/>
-                </style>
-                <property name="hexpand">true</property>
-                <property name="xalign">0</property>
-                <property name="label">Oscilloscope information</property>
-              </object>
-            </child>
-            <layout>
-              <property name="row">0</property>
-              <property name="column">0</property>
-              <property name="column-span">6</property>
-            </layout>
-          </object>
-        </child>
+      <object class="GtkScrolledWindow">
         <child>
           <object class="GtkGrid">
-            <style>
-              <class name="section"/>
-            </style>
+            <property name="margin-top">10</property>
+            <property name="margin-start">30</property>
+            <property name="margin-bottom">10</property>
+            <property name="margin-end">30</property>
+            <property name="column-spacing">25</property>
             <child>
               <object class="GtkBox">
-                <style>
-                  <class name="linked"/>
-                </style>
                 <child>
                   <object class="GtkLabel">
                     <style>
-                      <class name="group-label"/>
+                      <class name="section-label"/>
                     </style>
+                    <property name="hexpand">true</property>
                     <property name="xalign">0</property>
-                    <property name="label">Model &amp; Firmware version</property>
+                    <property name="label">Oscilloscope information</property>
                   </object>
                 </child>
                 <layout>
                   <property name="row">0</property>
                   <property name="column">0</property>
+                  <property name="column-span">6</property>
                 </layout>
               </object>
             </child>
             <child>
-              <object class="GtkBox">
+              <object class="GtkGrid">
                 <style>
-                  <class name="linked"/>
+                  <class name="section"/>
                 </style>
                 <child>
-                  <object class="GtkEntry" id="model">
+                  <object class="GtkBox">
                     <style>
                       <class name="linked"/>
                     </style>
-                    <property name="placeholder-text">HAMEG 107 Series</property>
-                    <property name="editable">false</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <style>
+                          <class name="group-label"/>
+                        </style>
+                        <property name="xalign">0</property>
+                        <property name="label">Model &amp; Firmware version</property>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">0</property>
+                      <property name="column">0</property>
+                    </layout>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="firmware">
+                  <object class="GtkBox">
                     <style>
                       <class name="linked"/>
                     </style>
-                    <property name="placeholder-text">FCX.XX DGX.XX</property>
-                    <property name="editable">false</property>
+                    <child>
+                      <object class="GtkEntry" id="model">
+                        <style>
+                          <class name="linked"/>
+                        </style>
+                        <property name="placeholder-text">HAMEG 107 Series</property>
+                        <property name="editable">false</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="firmware">
+                        <style>
+                          <class name="linked"/>
+                        </style>
+                        <property name="placeholder-text">FCX.XX DGX.XX</property>
+                        <property name="editable">false</property>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">1</property>
+                      <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <style>
+                      <class name="linked"/>
+                    </style>
+                    <child>
+                      <object class="GtkCheckButton" id="rm">
+                        <property name="label">Remote lock</property>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">1</property>
+                      <property name="column">1</property>
+                    </layout>
                   </object>
                 </child>
                 <layout>
                   <property name="row">1</property>
                   <property name="column">0</property>
+                  <property name="column-span">3</property>
                 </layout>
               </object>
             </child>
-            <child>
-              <object class="GtkBox">
-                <style>
-                  <class name="linked"/>
-                </style>
-                <child>
-                  <object class="GtkCheckButton" id="rm">
-                    <property name="label">Remote lock</property>
-                  </object>
-                </child>
-                <layout>
-                  <property name="row">1</property>
-                  <property name="column">1</property>
-                </layout>
-              </object>
-            </child>
-            <layout>
-              <property name="row">1</property>
-              <property name="column">0</property>
-              <property name="column-span">3</property>
-            </layout>
-          </object>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkLabel">
-                <style>
-                  <class name="section-label"/>
-                </style>
-                <property name="hexpand">true</property>
-                <property name="xalign">0</property>
-                <property name="label">Channels</property>
-              </object>
-            </child>
-            <layout>
-              <property name="row">2</property>
-              <property name="column">0</property>
-              <property name="column-span">6</property>
-            </layout>
-          </object>
-        </child>
-        <child>
-          <object class="GtkGrid">
-            <property name="column-spacing">30</property>
-            <style>
-              <class name="hm107--section"/>
-            </style>
             <child>
               <object class="GtkBox">
                 <child>
                   <object class="GtkLabel">
                     <style>
-                      <class name="group-label"/>
+                      <class name="section-label"/>
                     </style>
+                    <property name="hexpand">true</property>
                     <property name="xalign">0</property>
-                    <property name="label">Channel 1</property>
+                    <property name="label">Channels</property>
                   </object>
                 </child>
                 <layout>
                   <property name="row">2</property>
                   <property name="column">0</property>
+                  <property name="column-span">6</property>
                 </layout>
               </object>
             </child>
             <child>
-              <object class="GtkBox">
+              <object class="GtkGrid">
+                <property name="column-spacing">30</property>
+                <style>
+                  <class name="hm107--section"/>
+                </style>
                 <child>
-                  <object class="GtkLabel">
-                    <property name="label">V/div</property>
-                    <property name="margin-end">10</property>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkLabel">
+                        <style>
+                          <class name="group-label"/>
+                        </style>
+                        <property name="xalign">0</property>
+                        <property name="label">Channel 1</property>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">2</property>
+                      <property name="column">0</property>
+                    </layout>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkDropDown" id="ch1_volts_div">
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">V/div</property>
+                        <property name="margin-end">10</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkDropDown" id="ch1_volts_div">
+                        <style>
+                          <class name="hm107--div-dropdown"/>
+                        </style>
+                        <property name="model">
+                          <object class="GtkStringList" id="ch1_volts_div_values"></object>
+                        </property>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">3</property>
+                      <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Var.</property>
+                        <property name="margin-end">10</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="ch1_var">
+                        <style>
+                          <class name="hm107--div-dropdown"/>
+                        </style>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">3</property>
+                      <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="margin-top">10</property>
                     <style>
-                      <class name="hm107--div-dropdown"/>
+                      <class name="hm107--block-section"/>
                     </style>
-                    <property name="model">
-                      <object class="GtkStringList" id="ch1_volts_div_values"></object>
-                    </property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Probe</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">1</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <child>
+                          <object class="GtkCheckButton" id="ch1_probe">
+                            <property name="label">X1</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="ch1_x10">
+                            <property name="group">ch1_probe</property>
+                            <property name="label">X10</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="ch1_x100">
+                            <property name="group">ch1_probe</property>
+                            <property name="label">X100</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">4</property>
+                      <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="margin-top">10</property>
+                    <style>
+                      <class name="hm107--block-section"/>
+                    </style>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Input</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">1</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <child>
+                          <object class="GtkCheckButton" id="ch1_input">
+                            <property name="label">AC</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="ch1_dc">
+                            <property name="group">ch1_input</property>
+                            <property name="label">DC</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="ch1_gnd">
+                            <property name="group">ch1_input</property>
+                            <property name="label">GND</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">4</property>
+                      <property name="column">1</property>
+                    </layout>
                   </object>
                 </child>
                 <layout>
                   <property name="row">3</property>
                   <property name="column">0</property>
+                  <property name="column-span">3</property>
                 </layout>
               </object>
             </child>
             <child>
-              <object class="GtkBox">
-                <property name="margin-start">25</property>
+              <object class="GtkGrid">
+                <property name="column-spacing">30</property>
+                <style>
+                  <class name="hm107--section"/>
+                </style>
                 <child>
-                  <object class="GtkLabel">
-                    <property name="label">Var.</property>
-                    <property name="margin-end">10</property>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkLabel">
+                        <style>
+                          <class name="group-label"/>
+                        </style>
+                        <property name="xalign">0</property>
+                        <property name="label">Channel 2</property>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">2</property>
+                      <property name="column">0</property>
+                    </layout>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="ch1_var">
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">V/div</property>
+                        <property name="margin-end">10</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkDropDown" id="ch2_volts_div">
+                        <style>
+                          <class name="hm107--div-dropdown"/>
+                        </style>
+                        <property name="model">
+                          <object class="GtkStringList" id="ch2_volts_div_values"></object>
+                        </property>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">3</property>
+                      <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Var.</property>
+                        <property name="margin-end">10</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="ch2_var">
+                        <style>
+                          <class name="hm107--div-dropdown"/>
+                        </style>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">3</property>
+                      <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="margin-top">10</property>
                     <style>
-                      <class name="hm107--div-dropdown"/>
+                      <class name="hm107--block-section"/>
                     </style>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Probe</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">1</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <child>
+                          <object class="GtkCheckButton" id="ch2_probe">
+                            <property name="label">X1</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="ch2_x10">
+                            <property name="group">ch2_probe</property>
+                            <property name="label">X10</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="ch2_x100">
+                            <property name="group">ch2_probe</property>
+                            <property name="label">X100</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">4</property>
+                      <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="margin-top">10</property>
+                    <style>
+                      <class name="hm107--block-section"/>
+                    </style>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Input</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">1</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <child>
+                          <object class="GtkCheckButton" id="ch2_input">
+                            <property name="label">AC</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="ch2_dc">
+                            <property name="group">ch2_input</property>
+                            <property name="label">DC</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="ch2_gnd">
+                            <property name="group">ch2_input</property>
+                            <property name="label">GND</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">4</property>
+                      <property name="column">1</property>
+                    </layout>
                   </object>
                 </child>
                 <layout>
                   <property name="row">3</property>
-                  <property name="column">1</property>
+                  <property name="column">3</property>
+                  <property name="column-span">3</property>
                 </layout>
               </object>
             </child>
-            <child>
-              <object class="GtkBox">
-                <property name="margin-top">10</property>
-                <style>
-                  <class name="hm107--block-section"/>
-                </style>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="hexpand">true</property>
-                    <property name="label">Probe</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkBox">
-                    <property name="orientation">1</property>
-                    <property name="margin-start">10</property>
-                    <child>
-                      <object class="GtkCheckButton" id="ch1_probe">
-                        <property name="label">X1</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="ch1_x10">
-                        <property name="group">ch1_probe</property>
-                        <property name="label">X10</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="ch1_x100">
-                        <property name="group">ch1_probe</property>
-                        <property name="label">X100</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <layout>
-                  <property name="row">4</property>
-                  <property name="column">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkBox">
-                <property name="margin-top">10</property>
-                <style>
-                  <class name="hm107--block-section"/>
-                </style>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="hexpand">true</property>
-                    <property name="label">Input</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkBox">
-                    <property name="orientation">1</property>
-                    <property name="margin-start">10</property>
-                    <child>
-                      <object class="GtkCheckButton" id="ch1_input">
-                        <property name="label">AC</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="ch1_dc">
-                        <property name="group">ch1_input</property>
-                        <property name="label">DC</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="ch1_gnd">
-                        <property name="group">ch1_input</property>
-                        <property name="label">GND</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <layout>
-                  <property name="row">4</property>
-                  <property name="column">1</property>
-                </layout>
-              </object>
-            </child>
-            <layout>
-              <property name="row">3</property>
-              <property name="column">0</property>
-              <property name="column-span">3</property>
-            </layout>
-          </object>
-        </child>
-        <child>
-          <object class="GtkGrid">
-            <property name="column-spacing">30</property>
-            <style>
-              <class name="hm107--section"/>
-            </style>
             <child>
               <object class="GtkBox">
                 <child>
                   <object class="GtkLabel">
                     <style>
-                      <class name="group-label"/>
+                      <class name="section-label"/>
                     </style>
+                    <property name="hexpand">true</property>
                     <property name="xalign">0</property>
-                    <property name="label">Channel 2</property>
-                  </object>
-                </child>
-                <layout>
-                  <property name="row">2</property>
-                  <property name="column">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkBox">
-                <child>
-                  <object class="GtkLabel">
-                    <property name="label">V/div</property>
-                    <property name="margin-end">10</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkDropDown" id="ch2_volts_div">
-                    <style>
-                      <class name="hm107--div-dropdown"/>
-                    </style>
-                    <property name="model">
-                      <object class="GtkStringList" id="ch2_volts_div_values"></object>
-                    </property>
-                  </object>
-                </child>
-                <layout>
-                  <property name="row">3</property>
-                  <property name="column">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkBox">
-                <property name="margin-start">25</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="label">Var.</property>
-                    <property name="margin-end">10</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="ch2_var">
-                    <style>
-                      <class name="hm107--div-dropdown"/>
-                    </style>
-                  </object>
-                </child>
-                <layout>
-                  <property name="row">3</property>
-                  <property name="column">1</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkBox">
-                <property name="margin-top">10</property>
-                <style>
-                  <class name="hm107--block-section"/>
-                </style>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="hexpand">true</property>
-                    <property name="label">Probe</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkBox">
-                    <property name="orientation">1</property>
-                    <property name="margin-start">10</property>
-                    <child>
-                      <object class="GtkCheckButton" id="ch2_probe">
-                        <property name="label">X1</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="ch2_x10">
-                        <property name="group">ch2_probe</property>
-                        <property name="label">X10</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="ch2_x100">
-                        <property name="group">ch2_probe</property>
-                        <property name="label">X100</property>
-                      </object>
-                    </child>
+                    <property name="label">Trigger</property>
                   </object>
                 </child>
                 <layout>
                   <property name="row">4</property>
                   <property name="column">0</property>
+                  <property name="column-span">6</property>
                 </layout>
               </object>
             </child>
             <child>
-              <object class="GtkBox">
-                <property name="margin-top">10</property>
+              <object class="GtkGrid">
+                <property name="column-spacing">30</property>
                 <style>
-                  <class name="hm107--block-section"/>
+                  <class name="hm107--section"/>
                 </style>
                 <child>
-                  <object class="GtkLabel">
-                    <property name="hexpand">true</property>
-                    <property name="label">Input</property>
+                  <object class="GtkBox">
+                    <property name="margin-top">10</property>
+                    <style>
+                      <class name="hm107--block-section"/>
+                    </style>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Source</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">1</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <child>
+                          <object class="GtkCheckButton" id="trigger_source">
+                            <property name="label">CH 1</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton">
+                            <property name="group">trigger_source</property>
+                            <property name="label">CH 2</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton">
+                            <property name="group">trigger_source</property>
+                            <property name="label">Alt.</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton">
+                            <property name="group">trigger_source</property>
+                            <property name="label">Ext.</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">2</property>
+                      <property name="column">0</property>
+                    </layout>
                   </object>
                 </child>
                 <child>
                   <object class="GtkBox">
-                    <property name="orientation">1</property>
-                    <property name="margin-start">10</property>
+                    <property name="margin-top">10</property>
+                    <style>
+                      <class name="hm107--block-section"/>
+                    </style>
                     <child>
-                      <object class="GtkCheckButton" id="ch2_input">
-                        <property name="label">AC</property>
+                      <object class="GtkLabel">
+                        <property name="label">Coupling</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="ch2_dc">
-                        <property name="group">ch2_input</property>
-                        <property name="label">DC</property>
+                      <object class="GtkBox">
+                        <property name="orientation">1</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <child>
+                          <object class="GtkGrid">
+                            <child>
+                              <object class="GtkCheckButton" id="trigger_coupling">
+                                <property name="label">AC</property>
+                                <layout>
+                                  <property name="row">0</property>
+                                  <property name="column">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton">
+                                <property name="label">DC</property>
+                                <property name="group">trigger_coupling</property>
+                                <layout>
+                                  <property name="row">1</property>
+                                  <property name="column">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton">
+                                <property name="label">HF</property>
+                                <property name="group">trigger_coupling</property>
+                                <layout>
+                                  <property name="row">2</property>
+                                  <property name="column">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton">
+                                <property name="label">NR</property>
+                                <property name="group">trigger_coupling</property>
+                                <layout>
+                                  <property name="row">3</property>
+                                  <property name="column">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton">
+                                <property name="label">LF</property>
+                                <property name="group">trigger_coupling</property>
+                                <layout>
+                                  <property name="row">0</property>
+                                  <property name="column">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton">
+                                <property name="label">TVLINE</property>
+                                <property name="group">trigger_coupling</property>
+                                <layout>
+                                  <property name="row">1</property>
+                                  <property name="column">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton">
+                                <property name="label">TVFIELD</property>
+                                <property name="group">trigger_coupling</property>
+                                <layout>
+                                  <property name="row">2</property>
+                                  <property name="column">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton">
+                                <property name="label">LINE</property>
+                                <property name="group">trigger_coupling</property>
+                                <layout>
+                                  <property name="row">3</property>
+                                  <property name="column">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">2</property>
+                      <property name="column">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="margin-top">10</property>
+                    <style>
+                      <class name="hm107--block-section"/>
+                    </style>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Source</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="ch2_gnd">
-                        <property name="group">ch2_input</property>
-                        <property name="label">GND</property>
+                      <object class="GtkBox">
+                        <property name="orientation">1</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <child>
+                          <object class="GtkCheckButton" id="trigger_mode">
+                            <property name="label">Auto</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton">
+                            <property name="group">trigger_mode</property>
+                            <property name="label">Norm</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
+                    <layout>
+                      <property name="row">3</property>
+                      <property name="column">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="margin-top">10</property>
+                    <style>
+                      <class name="hm107--block-section"/>
+                    </style>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Slope</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">1</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <child>
+                          <object class="GtkGrid">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label">Timebase A</property>
+                                <style>
+                                  <class name="bold"/>
+                                </style>
+                                <layout>
+                                  <property name="row">0</property>
+                                  <property name="column">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="timebase_a_slope">
+                                <property name="label">Positive</property>
+                                <layout>
+                                  <property name="row">1</property>
+                                  <property name="column">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="timebase_a_negative">
+                                <property name="label">Negative</property>
+                                <property name="group">timebase_a_slope</property>
+                                <layout>
+                                  <property name="row">1</property>
+                                  <property name="column">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label">Timebase B</property>
+                                <property name="margin-top">2</property>
+                                <style>
+                                  <class name="bold"/>
+                                </style>
+                                <layout>
+                                  <property name="row">2</property>
+                                  <property name="column">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="timebase_b_slope">
+                                <property name="label">Positive</property>
+                                <layout>
+                                  <property name="row">3</property>
+                                  <property name="column">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="timebase_b_negative">
+                                <property name="label">Negative</property>
+                                <property name="group">timebase_b_slope</property>
+                                <layout>
+                                  <property name="row">3</property>
+                                  <property name="column">1</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="row">3</property>
+                      <property name="column">1</property>
+                    </layout>
                   </object>
                 </child>
                 <layout>
-                  <property name="row">4</property>
-                  <property name="column">1</property>
+                  <property name="row">5</property>
+                  <property name="column">0</property>
+                  <property name="column-span">3</property>
                 </layout>
               </object>
             </child>
-            <layout>
-              <property name="row">3</property>
-              <property name="column">3</property>
-              <property name="column-span">3</property>
-            </layout>
           </object>
         </child>
       </object>

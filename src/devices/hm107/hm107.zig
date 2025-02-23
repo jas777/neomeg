@@ -4,6 +4,7 @@ const serial = @import("../../communication/serial.zig");
 const channel = @import("channel.zig");
 const waveform = @import("waveform.zig");
 const command = @import("command.zig");
+const trig = @import("trigger.zig");
 
 const hm107 = @embedFile("../../ui/hm107.ui");
 
@@ -20,6 +21,8 @@ pub const Hm107Device = struct {
     
     ch1: channel.Channel,
     ch2: channel.Channel,
+
+    //trigger: trig.Trigger,
 
     waveform_preamble: waveform.WaveformPreamble,
 
@@ -50,6 +53,10 @@ pub const Hm107Device = struct {
 
         result = try command.sendCommand(alloc, connection, command.Command.WAVEFORM_PREAMBLE, "");
         const waveform_preamble = waveform.create_waveform_preamble(result[7..17]);
+
+        result = try command.sendCommand(alloc, connection, command.Command.TRIG_READ, "");
+        const trig_data: u8 = result[5];
+        _ = trig.create_trigger(trig_data, 0, 0, 0);
         
         var model_split = std.mem.splitAny(u8, try command.sendCommand(alloc, connection, command.Command.ID, ""), " ");
         var model = model_split.next().?;
@@ -127,7 +134,7 @@ pub const Hm107Device = struct {
         else if (!device.ch1.ac and !device.ch1.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch1_dc), 1)
         else if (device.ch1.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch1_gnd), 1);
 
-        // Channel 2
+        // Channel 2 TODO: Move into a separate function, no need for code doubling
 
         const ch2_volts: *gtk.GtkDropDown = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_volts_div"));
         const ch2_volts_values: *gtk.GtkStringList = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "ch2_volts_div_values"));
@@ -154,5 +161,7 @@ pub const Hm107Device = struct {
         if (device.ch2.ac and !device.ch2.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch2_ac), 1)
         else if (!device.ch2.ac and !device.ch2.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch2_dc), 1)
         else if (device.ch2.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch2_gnd), 1);
+
+        // Trigger
     }
 };

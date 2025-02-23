@@ -48,11 +48,6 @@ pub const Application = struct {
 
     fn load_css() void {
         const defaultCssC: [*c]const u8 = defaultCss;
-        // const adwaitaC: [*c]const u8 = adwaita;
-
-        // const css_provider2: *gtk.GtkCssProvider = gtk.gtk_css_provider_new();
-        // gtk.gtk_style_context_add_provider_for_display(gtk.gdk_display_get_default(), @ptrCast(css_provider2), gtk.GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-        // gtk.gtk_css_provider_load_from_string(@ptrCast(css_provider2), adwaitaC);
 
         const css_provider: *gtk.GtkCssProvider = gtk.gtk_css_provider_new();
         gtk.gtk_style_context_add_provider_for_display(gtk.gdk_display_get_default(), @ptrCast(css_provider), gtk.GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -61,7 +56,6 @@ pub const Application = struct {
 
     pub fn main() u8 {
         const app = gtk.adw.adw_application_new("com.neomeg", gtk.G_APPLICATION_FLAGS_NONE);
-        //.gtk_application_new("com.neomeg", gtk.G_APPLICATION_FLAGS_NONE);
         defer gtk.g_object_unref(app);
 
         _ = gtk.g_signal_connect_(app, "activate", @ptrCast(&activate), null);
