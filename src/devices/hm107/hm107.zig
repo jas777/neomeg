@@ -22,7 +22,7 @@ pub const Hm107Device = struct {
     ch1: channel.Channel,
     ch2: channel.Channel,
 
-    //trigger: trig.Trigger,
+    trigger: trig.Trigger,
 
     waveform_preamble: waveform.WaveformPreamble,
 
@@ -56,7 +56,10 @@ pub const Hm107Device = struct {
 
         result = try command.sendCommand(alloc, connection, command.Command.TRIG_READ, "");
         const trig_data: u8 = result[5];
-        _ = trig.create_trigger(trig_data, 0, 0, 0);
+        result = try command.sendCommand(alloc, connection, command.Command.TBB_READ, "");
+        const tbb_data: u8 = result[4];
+        result = try command.sendCommand(alloc, connection, command.Command.VERMODE_READ, "");
+        const vermode: u8 = result[8];
         
         var model_split = std.mem.splitAny(u8, try command.sendCommand(alloc, connection, command.Command.ID, ""), " ");
         var model = model_split.next().?;
@@ -70,8 +73,11 @@ pub const Hm107Device = struct {
             .connection = connection,
             .ch1 = ch1,
             .ch2 = ch2,
-            .waveform_preamble = waveform_preamble
+            .waveform_preamble = waveform_preamble,
+            .trigger = trig.create_trigger(trig_data, tbb_data, vermode),
         };
+
+        std.debug.print("\n{s}\n{s}\n", .{ @tagName(device.trigger.timebaseA.slope), @tagName(device.trigger.timebaseB.slope) });
 
         _ = try command.sendCommand(alloc, connection, command.Command.REMOTE_EXIT, "");
         return device;
@@ -163,5 +169,44 @@ pub const Hm107Device = struct {
         else if (device.ch2.gnd) gtk.gtk_check_button_set_active(@ptrCast(ch2_gnd), 1);
 
         // Trigger
+        const trig_ch1: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trigger_source"));
+        const trig_ch2: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_ch2"));
+        const trig_alt: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_alt"));
+        const trig_ext: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_ext"));
+
+        switch (device.trigger.source) {
+            .CH1 => gtk.gtk_check_button_set_active(@ptrCast(trig_ch1), 1),
+            .CH2 => gtk.gtk_check_button_set_active(@ptrCast(trig_ch2), 1),
+            .ALT => gtk.gtk_check_button_set_active(@ptrCast(trig_alt), 1),
+            .EXT => gtk.gtk_check_button_set_active(@ptrCast(trig_ext), 1),
+        }
+
+        const trig_ac: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trigger_coupling"));
+        const trig_dc: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_dc"));
+        const trig_hf: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_hf"));
+        const trig_nr: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_nr"));
+        const trig_lf: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_lf"));
+        const trig_tvline: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_tvline"));
+        const trig_tvfield: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_tvfield"));
+        const trig_line: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_line"));
+
+        switch (device.trigger.coupling) {
+            .AC => gtk.gtk_check_button_set_active(@ptrCast(trig_ac), 1),
+            .DC => gtk.gtk_check_button_set_active(@ptrCast(trig_dc), 1),
+            .HF => gtk.gtk_check_button_set_active(@ptrCast(trig_hf), 1),
+            .NR => gtk.gtk_check_button_set_active(@ptrCast(trig_nr), 1),
+            .LF => gtk.gtk_check_button_set_active(@ptrCast(trig_lf), 1),
+            .TVLINE => gtk.gtk_check_button_set_active(@ptrCast(trig_tvline), 1),
+            .TVFIELD => gtk.gtk_check_button_set_active(@ptrCast(trig_tvfield), 1),
+            .LINE => gtk.gtk_check_button_set_active(@ptrCast(trig_line), 1),
+        }
+
+        const trig_mode: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trigger_mode"));
+        const trig_norm: *gtk.GtkCheckButton = @ptrCast(gtk.gtk_builder_get_object(@constCast(builder), "trig_norm"));
+
+        switch (device.trigger.mode) {
+            .AUTO => gtk.gtk_check_button_set_active(@ptrCast(trig_mode), 1),
+            .NORM => gtk.gtk_check_button_set_active(@ptrCast(trig_norm), 1),
+        }
     }
 };

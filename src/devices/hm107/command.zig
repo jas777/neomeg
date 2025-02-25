@@ -16,6 +16,8 @@ pub const Command = enum {
     TBB_READ,
     TRIG_READ,
     VERMODE_READ,
+    TRGLEVA_READ,
+    TRGLEVB_READ,
     VERS,
     ID,
     
@@ -37,6 +39,8 @@ fn mapCommandToString(command: Command) ![]const u8 {
         .TBB_READ => "TBB?\r\n",
         .TRIG_READ => "TRIG?\r\n",
         .VERMODE_READ => "VERMODE?\r\n",
+        .TRGLEVA_READ => "TRGLEVA?\r\n",
+        .TRGLEVB_READ => "TRGLEVB?\r\n",
         .VERS => "VERS?\r\n",
         .ID => "ID?\r\n",
     };
@@ -58,6 +62,8 @@ fn expectedBytes(command: Command) u16 {
         .TBB_READ => 5,
         .TRIG_READ => 6,
         .VERMODE_READ => 9,
+        .TRGLEVA_READ => 10,
+        .TRGLEVB_READ => 10,
         .VERS => 20,
         .ID => 30
     };

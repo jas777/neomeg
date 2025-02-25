@@ -33,7 +33,8 @@ pub const TimebaseSlope = enum {
 };
 
 pub const Timebase = struct {
-    slope: TimebaseSlope
+    slope: TimebaseSlope,
+    level: u10
 };
 
 pub const Trigger = struct {
@@ -44,15 +45,19 @@ pub const Trigger = struct {
     timebaseB: Timebase
 };
 
-pub fn create_trigger(trig_data: u8, tb_a: u8, tb_b: u8, vermode: u8) Trigger {
-    _ = tb_a;
-    _ = tb_b;
-    _ = vermode;
+fn vermode_to_source(vermode: u8) TriggerSource {
+    if (((vermode >> 7) & 1) == 1) return TriggerSource.ALT;
+    if ((vermode << 6) == 0) return TriggerSource.CH1;
+    if ((vermode << 6) == 64) return TriggerSource.CH2;
+    return TriggerSource.EXT;
+}
+
+pub fn create_trigger(trig_data: u8, tb_b: u8, vermode: u8) Trigger {
     return Trigger {
-        .source = TriggerSource.ALT,
+        .source = vermode_to_source(vermode),
         .coupling = @enumFromInt(trig_data & 7),
         .mode = @enumFromInt((trig_data >> 4) & 1),
-        .timebaseA = Timebase { .slope = TimebaseSlope.NEGATIVE },
-        .timebaseB = Timebase { .slope = TimebaseSlope.NEGATIVE },
+        .timebaseA = Timebase { .slope = @enumFromInt((trig_data >> 7) & 1), .level = 0 },
+        .timebaseB = Timebase { .slope = @enumFromInt((tb_b >> 7) & 1), .level = 0 },
     };
 }
