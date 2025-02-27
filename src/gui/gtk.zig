@@ -1,5 +1,6 @@
 pub usingnamespace @cImport({
     @cInclude("gtk/gtk.h");
+    @cInclude("gtkchart.h");
 });
 
 pub const adw = @cImport({

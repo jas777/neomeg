@@ -18,6 +18,10 @@ pub fn build(b: *std.Build) void {
     // exe.root_module.addImport("serial", serial.module("serial"));
 
     exe.linkLibC();
+    exe.addIncludePath(b.path("./gtkchart/src/"));
+    exe.addCSourceFile(.{
+        .file = b.path("./gtkchart/src/gtkchart.c")
+    });
     exe.linkSystemLibrary2("gtk4", .{ .use_pkg_config = .force });
     exe.linkSystemLibrary2("libadwaita-1", .{ .use_pkg_config = .force });
 

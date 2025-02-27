@@ -1,0 +1,3 @@
+[submodule "gtkchart"]
+	path = gtkchart
+	url = https://github.com/lundmar/gtkchart

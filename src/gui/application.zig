@@ -32,6 +32,39 @@ pub const Application = struct {
     }
 
     fn on_new_device_click(widget: *gtk.GtkWidget, _: gtk.gpointer) void {
+        // Create a new dialog window
+        const popup = gtk.gtk_window_new();
+        gtk.gtk_window_set_title(@ptrCast(popup), "New Device");
+        gtk.gtk_window_set_default_size(@ptrCast(popup), 400, 200);
+        const parent_window = gtk.gtk_widget_get_ancestor(widget, gtk.gtk_window_get_type());
+
+        // FIXME: Just fooling around with charts for now
+        if (parent_window) |win| {
+            gtk.gtk_window_set_transient_for(@ptrCast(popup), @ptrCast(win));
+        }
+
+        gtk.gtk_window_set_modal(@ptrCast(popup), 1);
+
+        // Prevent parent window from closing when the dialog closes
+        gtk.gtk_window_set_destroy_with_parent(@ptrCast(popup), 0);
+
+        // Add a label to the popup
+        const label = gtk.gtk_label_new("Select a device to connect");
+        gtk.gtk_window_set_child(@ptrCast(popup), @ptrCast(label));
+
+        const chart = gtk.gtk_chart_new();
+        gtk.gtk_chart_set_type(@ptrCast(chart), gtk.GTK_CHART_TYPE_LINE);
+        gtk.gtk_chart_set_title(@ptrCast(chart), "Title");
+        gtk.gtk_chart_set_label(@ptrCast(chart), "Label");
+        gtk.gtk_chart_set_x_label(@ptrCast(chart), "X label [ ]");
+        gtk.gtk_chart_set_y_label(@ptrCast(chart), "Y label [ ]");
+        gtk.gtk_chart_set_x_max(@ptrCast(chart), 100);
+        gtk.gtk_chart_set_y_max(@ptrCast(chart), 10);
+        gtk.gtk_chart_set_width(@ptrCast(chart), 800);
+        gtk.gtk_window_set_child(@ptrCast(popup), @ptrCast(chart));
+
+        // Show the popup
+        gtk.gtk_window_present(@ptrCast(popup));
         // TODO: Add device choice, HM107 for tesing purposes
         const navigation = gtk.gtk_widget_get_parent(
             gtk.gtk_widget_get_parent(
